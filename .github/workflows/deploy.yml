@@ -1,0 +1,29 @@
+name: Model Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set lowercase repo name
+        run: echo "REPO_NAME=$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Build and push Docker image
+        env:
+          MODEL_PATH: /app/models/ 
+          APP_VERSION: blue 
+          MODEL_VERSION: v1.0.0
+        run: |
+          docker build -t ghcr.io/${REPO_NAME}:${{ github.sha }} .
+          echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker push ghcr.io/${REPO_NAME}:${{ github.sha }}
+
+      - name: Deploy to Cloud
+        run: |
+          echo "Deploying image"
+          echo "ghcr.io/${REPO_NAME}:${{ github.sha }}"

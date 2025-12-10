@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  ml-service-blue:
+    build: .
+    environment:
+      APP_VERSION: "blue"
+      MODEL_VERSION: "v1.0.0"
+      MODEL_PATH: "/app/models/"
+    ports:
+      - "8081:8080"

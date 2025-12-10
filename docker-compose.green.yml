@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  ml-service-green:
+    build: .
+    environment:
+      APP_VERSION: "green"
+      MODEL_VERSION: "v1.1.0"
+      MODEL_PATH: "/app/models/"
+    ports:
+      - "8082:8080"
