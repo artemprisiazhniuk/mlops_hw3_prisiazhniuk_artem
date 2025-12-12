@@ -14,8 +14,8 @@ from starlette.responses import JSONResponse, Response
 
 
 ### Конфигурация
-MODEL_PATH = os.getenv("MODEL_PATH", "./models")
-LOG_FILE = os.getenv("LOG_FILE", "./logs/app.log")
+MODEL_PATH = os.getenv("MODEL_PATH", "/app/models")
+LOG_FILE = os.getenv("LOG_FILE", "/app/logs/app.log")
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 
 
@@ -108,7 +108,7 @@ def predict(request: UserRequest):
     try:
         model_version = os.getenv("MODEL_VERSION", "v1.0.0")
         model_path = os.path.join(
-            os.environ["MODEL_PATH"],
+            MODEL_PATH,
             f"model_{model_version}.pkl"
         )
         logger.info(f"Loading model from {model_path}")

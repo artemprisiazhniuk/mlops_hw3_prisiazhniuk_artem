@@ -2,10 +2,13 @@ version: "3.9"
 
 services:
   ml-service-blue:
-    build: .
+    image: ghcr.io/artemprisiazhniuk/mlops_hw3_prisiazhniuk_artem-blue:${IMAGE_TAG}
     environment:
       APP_VERSION: "blue"
       MODEL_VERSION: "v1.0.0"
-      MODEL_PATH: "/app/models/"
     ports:
       - "8081:8080"
+
+networks:
+  default:
+    name: demo-net

@@ -2,10 +2,13 @@ version: "3.9"
 
 services:
   ml-service-green:
-    build: .
+    image: ghcr.io/artemprisiazhniuk/mlops_hw3_prisiazhniuk_artem-green:${IMAGE_TAG}
     environment:
       APP_VERSION: "green"
       MODEL_VERSION: "v1.1.0"
-      MODEL_PATH: "/app/models/"
     ports:
       - "8082:8080"
+
+networks:
+  default:
+    name: demo-net
