@@ -4,7 +4,7 @@ import os, subprocess
 
 app = FastAPI()
 
-APP_DIR = os.environ.get("APP_DIR", "~/mlops_hw3_prisiazhniuk_artem")
+APP_DIR = os.environ.get("APP_DIR", "./")
 EXPECTED_TOKEN = os.environ.get("DEPLOY_TOKEN", "")
 
 class DeployReq(BaseModel):
