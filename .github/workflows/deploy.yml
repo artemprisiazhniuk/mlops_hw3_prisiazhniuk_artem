@@ -50,3 +50,19 @@ jobs:
             -d '{
               "git_sha": "'"$SHA"'"
             }'
+
+      - name: Wait for health check
+        run: |
+          HEALTH_URL="${{ secrets.CLOUD_BASE_URL }}/health"
+
+          for i in $(seq 1 60); do
+            if curl -fsS "$HEALTH_URL"; then
+              echo "Service is running"
+              exit 0
+            fi
+            echo "Waiting for health... ($i/60)"
+            sleep 5
+          done
+
+          echo "Health check failed"
+          exit 1
